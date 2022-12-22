@@ -7,15 +7,15 @@
             <div class="column">
                 <div class="is-flex is-align-items-center is-justify-content-space-between">
                     <section>
-                        <strong>00:00:00</strong>
+                        <strong>{{ tempoDecorrido }}</strong>
                     </section>
-                    <button class="button">
+                    <button class="button" @click="iniciar">
                         <span class="icon">
                             <i class="fas fa-play"></i>
                         </span>
                         <span>play</span>
                     </button>
-                    <button class="button">
+                    <button class="button" @click="finalizar">
                         <span class="icon">
                             <i class="fas fa-stop"></i>
                         </span>
@@ -28,8 +28,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 export default defineComponent({
-    name: 'FormularioTracker'
+    name: 'FormularioTracker',
+    setup () {
+        const tempoEmSegundos = ref(0)
+        let cronometro = 0
+        const tempoDecorrido = computed(() => {
+            return new Date(tempoEmSegundos.value * 1000).toISOString().substr(11,8)
+        })
+        function iniciar() {
+            cronometro = setInterval(() => {
+                tempoEmSegundos.value += 1
+            }, 1000)
+        }
+
+        function finalizar() {
+            clearInterval(cronometro)
+        }
+
+        return {
+            tempoEmSegundos,
+            tempoDecorrido,
+            cronometro,
+
+            iniciar,
+            finalizar
+        }
+    }
 })
 </script>
