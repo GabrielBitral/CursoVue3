@@ -1,60 +1,47 @@
 <template>
-    <div class="box">
+    <div class="box formulario">
         <div class="columns">
             <div class="column is-8" role="form" aria-label="Formulário para criação de uma nova tarefa.">
-                <input type="text" class="input" placeholder="Qual tarefa você deseja iniciar?" />
+                <input v-model="descricao" type="text" class="input" placeholder="Qual tarefa você deseja iniciar?" />
             </div>
             <div class="column">
-                <div class="is-flex is-align-items-center is-justify-content-space-between">
-                    <section>
-                        <strong>{{ tempoDecorrido }}</strong>
-                    </section>
-                    <button class="button" @click="iniciar">
-                        <span class="icon">
-                            <i class="fas fa-play"></i>
-                        </span>
-                        <span>play</span>
-                    </button>
-                    <button class="button" @click="finalizar">
-                        <span class="icon">
-                            <i class="fas fa-stop"></i>
-                        </span>
-                        <span>stop</span>
-                    </button>
-                </div>
+                <Temporizador @ao-temporizador-finalizado="finalizarTarefa" />
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
+import Temporizador from './Temporizador.vue';
 export default defineComponent({
-    name: 'FormularioTracker',
-    setup () {
-        const tempoEmSegundos = ref(0)
-        let cronometro = 0
-        const tempoDecorrido = computed(() => {
-            return new Date(tempoEmSegundos.value * 1000).toISOString().substr(11,8)
-        })
-        function iniciar() {
-            cronometro = setInterval(() => {
-                tempoEmSegundos.value += 1
-            }, 1000)
-        }
-
-        function finalizar() {
-            clearInterval(cronometro)
+    name: 'FormulárioTracker',
+    components: {
+        Temporizador
+    },
+    emits: ['aoSalvarTarefa'],
+    setup(_, { emit }) {
+        const descricao = ref('')
+        function finalizarTarefa(tempoDecorrido: number): void {
+            emit('aoSalvarTarefa', {
+                duracaoEmSegundos: tempoDecorrido,
+                descricao: descricao.value
+            })
+            descricao.value = ''
         }
 
         return {
-            tempoEmSegundos,
-            tempoDecorrido,
-            cronometro,
+            descricao,
 
-            iniciar,
-            finalizar
+            finalizarTarefa
         }
-    }
+    },
 })
 </script>
+
+<style>
+.formulario {
+    color: var(--texto-primario);
+    background-color: var(--bg-primario);
+}
+</style>
