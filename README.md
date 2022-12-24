@@ -1,5 +1,7 @@
 # alura-tracker
 
+![image](https://user-images.githubusercontent.com/77023882/209446111-881f172f-2888-45ee-987c-b17e45aed02b.png)
+
 ## Project setup
 ```
 npm install
