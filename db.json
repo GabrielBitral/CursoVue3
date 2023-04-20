@@ -1,0 +1,23 @@
+{
+  "projetos": [
+    {
+      "id": 1,
+      "nome": "Alura Tracker"
+    },
+    {
+      "nome": "Byte Bank",
+      "id": 2
+    }
+  ],
+  "tarefas": [
+    {
+      "id": 1,
+      "duracaoEmSegundos": 120,
+      "descricao": "Configuração do Ambiente",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker"
+      } 
+    }
+  ]
+}

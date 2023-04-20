@@ -14,6 +14,8 @@ import Formulario from '../components/Formulario.vue';
 import Tarefa from '../components/Tarefa.vue';
 import ITarefa from '../interfaces/ITarefa';
 import Box from '../components/Box.vue';
+import { useStore } from '@/store';
+import { CADASTRAR_TAREFA, OBTER_TAREFAS } from '@/store/tipo_acoes';
 
 export default defineComponent({
 name: 'App',
@@ -23,10 +25,12 @@ components: {
     Box
 },
 setup() {
-    const tarefas = ref([] as ITarefa[])
+    const store = useStore()
+    store.dispatch(OBTER_TAREFAS)
+    const tarefas = ref(store.state.tarefas)
 
     function salvarTarefa (tarefa : ITarefa) {
-        tarefas.value.push(tarefa)
+        store.dispatch(CADASTRAR_TAREFA, tarefa)
     }
     
 

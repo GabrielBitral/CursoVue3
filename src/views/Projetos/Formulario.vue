@@ -25,10 +25,10 @@
 <script lang="ts">
 import { TipoNotificacao } from '@/interfaces/INotificacao';
 import { useStore } from '@/store';
-import { ALTERA_PROJETO, ADICIONA_PROJETO } from '@/store/tipo_mutacoes';
 import { defineComponent, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import useNotificador from '@/hooks/notificador'
+import { ALTERAR_PROJETO, CADASTRAR_PROJETO } from '@/store/tipo_acoes';
 
 export default defineComponent({
     name: 'FormularioTracker',
@@ -52,13 +52,18 @@ export default defineComponent({
     
         function salvar () {
             if (props.id) {
-                store.commit(ALTERA_PROJETO, {
+                store.dispatch(ALTERAR_PROJETO, {
                     id: props.id,
                     nome: nomeDoProjeto.value
                 })
+                    .then(() => casoSucesso())
             } else {
-                store.commit(ADICIONA_PROJETO, nomeDoProjeto.value)
+                store.dispatch(CADASTRAR_PROJETO, nomeDoProjeto.value)
+                    .then(() => casoSucesso())
             }
+        }
+
+        function casoSucesso () {
             nomeDoProjeto.value = ''
             notificar(TipoNotificacao.SUCESSO, 'Excelente!', 'O projeto foi salvo com sucesso!')
             router.push('/projetos')
