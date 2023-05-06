@@ -45,7 +45,7 @@ export default defineComponent({
     name: 'ListaTracker',
     setup() {
         const store = useStore()
-        const projetos = computed(() => store.state.projetos)
+        const projetos = computed(() => store.state.projeto.projetos)
         store.dispatch(OBTER_PROJETOS)
     
         function excluirProjeto(id: string) {

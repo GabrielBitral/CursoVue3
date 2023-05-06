@@ -30,8 +30,6 @@ import { computed, defineComponent, ref } from 'vue';
 import Temporizador from './Temporizador.vue';
 import { useStore } from 'vuex';
 import { key } from '@/store'
-import { NOTIFICAR } from '@/store/tipo_mutacoes';
-import { TipoNotificacao } from '@/interfaces/INotificacao';
 
 export default defineComponent({
     name: 'FormulárioTracker',
@@ -43,7 +41,7 @@ export default defineComponent({
         const descricao = ref('')
         const idProjeto = ref('')
         const store = useStore(key)
-        const projetos = computed(() => store.state.projetos)
+        const projetos = computed(() => store.state.projeto.projetos)
 
         function finalizarTarefa(tempoDecorrido: number): void {
             // const projeto = projetos.value.find((p) => p.id == idProjeto.value); // primeiro, buscamos pelo projeto

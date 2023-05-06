@@ -7,6 +7,10 @@
     {
       "nome": "Byte Bank",
       "id": 2
+    },
+    {
+      "nome": "Estudos Pessoais",
+      "id": 3
     }
   ],
   "tarefas": [
@@ -17,7 +21,25 @@
       "projeto": {
         "id": 1,
         "nome": "Alura Tracker"
-      } 
+      }
+    },
+    {
+      "duracaoEmSegundos": 10,
+      "descricao": "Refatoração do VueX",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker"
+      },
+      "id": 2
+    },
+    {
+      "duracaoEmSegundos": 3,
+      "descricao": "Teste",
+      "projeto": {
+        "nome": "Byte Bank",
+        "id": 2
+      },
+      "id": 3
     }
   ]
 }
