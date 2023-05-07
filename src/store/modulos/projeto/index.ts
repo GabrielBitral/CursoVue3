@@ -10,13 +10,10 @@ export interface EstadoProjeto {
 }
 
 export const projeto: Module<EstadoProjeto, Estado> = {
-    state: {
-        projetos: []
-    },
     mutations: {
         [ADICIONA_PROJETO](state, nomeDoProjeto: string) {
             const projeto = {
-                id: new Date().toISOString(),
+                id: new Date().getTime(),
                 nome: nomeDoProjeto
             } as IProjeto
 
@@ -26,7 +23,7 @@ export const projeto: Module<EstadoProjeto, Estado> = {
             const index = state.projetos.findIndex(proj => proj.id === projeto.id)
             state.projetos[index] = projeto
         },
-        [EXCLUIR_PROJETO](state, idProjeto: string) {
+        [EXCLUIR_PROJETO](state, idProjeto: number) {
             state.projetos = state.projetos.filter(proj => proj.id !== idProjeto)
         },
         [DEFINIR_PROJETOS](state, projetos: IProjeto[]) {
@@ -46,10 +43,15 @@ export const projeto: Module<EstadoProjeto, Estado> = {
         [ALTERAR_PROJETO] (contexto, projeto: IProjeto) {
             return http.put(`projetos/${projeto.id}`, projeto) 
         },
-        [REMOVER_PROJETO] ({ commit }, id: string) {
+        [REMOVER_PROJETO] ({ commit }, id: number) {
             return http.delete(`projetos/${id}`)
                 .then(() => commit(EXCLUIR_PROJETO, id))
                 // poderia também buscar novamente os dados da api
         },
+    },
+    getters: {
+        projetos (state) {
+          return state.projetos
+        }
     }
 }

@@ -25,7 +25,7 @@
 <script lang="ts">
 import { TipoNotificacao } from '@/interfaces/INotificacao';
 import { useStore } from '@/store';
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import useNotificador from '@/hooks/notificador'
 import { ALTERAR_PROJETO, CADASTRAR_PROJETO } from '@/store/tipo_acoes';
@@ -34,7 +34,7 @@ export default defineComponent({
     name: 'FormularioTracker',
     props: {
         id: {
-            type: String
+            type: Number
         }
     },
     setup(props) {
@@ -42,13 +42,11 @@ export default defineComponent({
         const router = useRouter()
         const { notificar } = useNotificador()
         const nomeDoProjeto = ref('')
-
-        onMounted(() => {
-            if (props.id) {
-                const projeto = store.state.projeto.projetos.find(proj => proj.id === props.id)
-                nomeDoProjeto.value = projeto?.nome || ''
-            }
-        })
+        
+        if (props.id) {
+            const projeto = store.state.projeto.projetos.find((proj) => proj.id === props.id)
+            nomeDoProjeto.value = projeto?.nome || ''
+        }
     
         function salvar () {
             if (props.id) {
@@ -71,7 +69,6 @@ export default defineComponent({
     
         return {
             nomeDoProjeto,
-            store,
 
             salvar
         }

@@ -39,11 +39,11 @@ export default defineComponent({
     emits: ['aoSalvarTarefa'],
     setup(_, { emit }) {
         const descricao = ref('')
-        const idProjeto = ref('')
+        const idProjeto = ref(0)
         const store = useStore(key)
         const projetos = computed(() => store.state.projeto.projetos)
 
-        function finalizarTarefa(tempoDecorrido: number): void {
+        const finalizarTarefa = (tempoDecorrido: number): void => {
             // const projeto = projetos.value.find((p) => p.id == idProjeto.value); // primeiro, buscamos pelo projeto
             // if(!projeto) { // se o projeto não existe...
             //     store.commit(NOTIFICAR, {

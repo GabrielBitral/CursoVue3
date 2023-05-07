@@ -48,7 +48,7 @@ export default defineComponent({
         const projetos = computed(() => store.state.projeto.projetos)
         store.dispatch(OBTER_PROJETOS)
     
-        function excluirProjeto(id: string) {
+        function excluirProjeto(id: number) {
             store.dispatch(REMOVER_PROJETO, id)
         }
 
